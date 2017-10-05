@@ -13,9 +13,38 @@ html, body, #root {
 
 .Calculator {
   width: 20em;
-  height: 27em;
+  height: auto;
   background: #191A22;
   -webkit-box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
   -moz-box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
   box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
+  
+}
+
+.row {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.calculator-display {
+  background: #FFFFFF;
+  height: 6em;
+  opacity: 0.9;
+  -webkit-box-shadow: 5px -6px 208px 19px rgba(255,255,255,0.3);
+  -moz-box-shadow: 5px -6px 208px 19px rgba(255,255,255,0.3);
+  box-shadow: 5px -6px 208px 19px rgba(255,255,255,0.3);
+}
+
+.calculator-control {
+  background: #3C3C46;
+}
+
+.button {
+  width: 5em;
+  height: 5em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 5em;
 }
