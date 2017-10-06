@@ -19,6 +19,7 @@ html, body, #root {
   -webkit-box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
   -moz-box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
   box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
+  border-radius: 15px 15px 0 0;
 }
 
 .row {
@@ -49,6 +50,7 @@ html, body, #root {
   font-size: 2.5em;
   text-align: right;
   position: relative;
+  border-radius: 15px 15px 0 0;
 }
 
 .calculator-display .calculation {
@@ -80,7 +82,4 @@ html, body, #root {
   height: 4em;
   line-height: 4em;
   background: #3C3C46;
-}
-
-.cnh_holding .button {
 }
