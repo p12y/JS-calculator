@@ -6,21 +6,50 @@ import CalculatorButton from './components/calculator_button';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {result: null, calculation: ""};
+    this.state = {result: null, calculation: "", currentNum: "", prevButtonType: "", firstNum: null, secondNum: null, operator: ""};
     this.handleInputClick = this.handleInputClick.bind(this);
     this.handleControlClick = this.handleControlClick.bind(this);
   }
 
   handleInputClick(number) {
-    console.log('wrong')
-    this.setState({calculation: this.state.calculation + number});
+    let stringNum = number.toString();
+    this.setState(
+                  {
+                    calculation: this.state.calculation + number,
+                    currentNum: this.state.currentNum + stringNum,
+                    prevButtonType: 'number'
+                  }
+                  );
   }
 
   handleControlClick(control) {
-    console.log(control);
     switch(control) {
       case 'DEL': {
-        this.setState({result: null, calculation: ""});
+        this.setState({calculation: "", result: null});
+        break;
+      }
+      case '+': {
+        this.setState({calculation: this.state.calculation.concat('+')});
+        break;
+      }
+      case '=': {
+        let str = this.state.calculation;
+        str = str.replace(/x/g, '*').replace(/÷/g, '/');
+        let result = eval(str);
+        this.setState({calculation: result.toString() });
+        break;
+      }
+      case '-': {
+        this.setState({calculation: this.state.calculation.concat('-')});
+        break;
+      }
+      case 'x': {
+        this.setState({calculation: this.state.calculation.concat('x')});
+        break;
+      }
+      case '÷': {
+        this.setState({calculation: this.state.calculation.concat('÷')});
+        break;
       }
     }
   }
