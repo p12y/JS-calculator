@@ -1,7 +1,7 @@
 html, body, #root {
   height: 100%;
   background: #2C2D3C;
-  color: white;
+  color: #C6EAEE;
 }
 
 .App {
@@ -26,6 +26,15 @@ html, body, #root {
   display: flex;
   -webkit-flex-direction: row;
   flex-direction: row;
+  width: 15em;
+}
+
+.column {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  float: right;
 }
 
 .calculator-display {
@@ -47,4 +56,9 @@ html, body, #root {
   text-align: center;
   vertical-align: middle;
   line-height: 5em;
+}
+
+.button.calculator-control {
+  height: 4em;
+  line-height: 4em;
 }

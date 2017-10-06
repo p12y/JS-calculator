@@ -12,30 +12,38 @@ class App extends Component {
               <CalculatorDisplay />
             </div>
             <div className="calculator-inputs">
+              <div className="column">
+                <CalculatorButton char="DEL" className="calculator-control" />
+                <CalculatorButton char="&divide;" className="calculator-control" />
+                <CalculatorButton char="x" className="calculator-control" />
+                <CalculatorButton char="-" className="calculator-control" />
+                <CalculatorButton char="+" className="calculator-control" />
+              </div>
               <div className="row">
                 <CalculatorButton char="7" />
                 <CalculatorButton char="8" />
                 <CalculatorButton char="9" />
-                <CalculatorButton char="/" className="calculator-control" />
+                
               </div>
               <div className="row">
                 <CalculatorButton char="4" />
                 <CalculatorButton char="5" />
                 <CalculatorButton char="6" />
-                <CalculatorButton char="x" className="calculator-control" />
+                
               </div>
               <div className="row">
                 <CalculatorButton char="1" />
                 <CalculatorButton char="2" />
                 <CalculatorButton char="3" />
-                <CalculatorButton char="-" className="calculator-control" />
+                
               </div>
               <div className="row">
                 <CalculatorButton char="." />
                 <CalculatorButton char="0" />
                 <CalculatorButton char="=" />
-                <CalculatorButton char="+" className="calculator-control" />
+                
               </div>
+              
             </div>
         </div>
       </div>
