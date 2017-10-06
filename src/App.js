@@ -4,46 +4,82 @@ import CalculatorDisplay from './components/calculator_display';
 import CalculatorButton from './components/calculator_button';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {result: null, calculation: ""};
+    this.handleInputClick = this.handleInputClick.bind(this);
+    this.handleControlClick = this.handleControlClick.bind(this);
+  }
+
+  handleInputClick(number) {
+    console.log('wrong')
+    this.setState({calculation: this.state.calculation + number});
+  }
+
+  handleControlClick(control) {
+    console.log(control);
+    switch(control) {
+      case 'DEL': {
+        this.setState({result: null, calculation: ""});
+      }
+    }
+  }
+
   render() {
     return (
         <div className="App">
         <div className="Calculator">
             <div className="calculator-display">
-              <CalculatorDisplay />
+              <CalculatorDisplay result={this.state.result} calculation={this.state.calculation} />
             </div>
             <div className="calculator-inputs">
               <div className="column">
-                <CalculatorButton char="DEL" className="calculator-control" />
-                <CalculatorButton char="&divide;" className="calculator-control" />
-                <CalculatorButton char="x" className="calculator-control" />
-                <CalculatorButton char="-" className="calculator-control" />
-                <CalculatorButton char="+" className="calculator-control" />
+                <CalculatorButton 
+                  value="DEL" 
+                  className="calculator-control" 
+                  onClick={this.handleControlClick}
+                />
+                <CalculatorButton 
+                  value="&divide;" 
+                  className="calculator-control" 
+                  onClick={this.handleControlClick}
+                />
+                <CalculatorButton 
+                  value="x" 
+                  className="calculator-control" 
+                  onClick={this.handleControlClick}
+                />
+                <CalculatorButton 
+                  value="-" 
+                  className="calculator-control" 
+                  onClick={this.handleControlClick}
+                />
+                <CalculatorButton 
+                  value="+" 
+                  className="calculator-control" 
+                  onClick={this.handleControlClick}
+                />
               </div>
               <div className="row">
-                <CalculatorButton char="7" />
-                <CalculatorButton char="8" />
-                <CalculatorButton char="9" />
-                
+                <CalculatorButton onClick={this.handleInputClick} value={7} />
+                <CalculatorButton onClick={this.handleInputClick} value={8} />
+                <CalculatorButton onClick={this.handleInputClick} value={9} />
               </div>
               <div className="row">
-                <CalculatorButton char="4" />
-                <CalculatorButton char="5" />
-                <CalculatorButton char="6" />
-                
+                <CalculatorButton onClick={this.handleInputClick} value={4} />
+                <CalculatorButton onClick={this.handleInputClick} value={5} />
+                <CalculatorButton onClick={this.handleInputClick} value={6} />
               </div>
               <div className="row">
-                <CalculatorButton char="1" />
-                <CalculatorButton char="2" />
-                <CalculatorButton char="3" />
-                
+                <CalculatorButton onClick={this.handleInputClick} value={1} />
+                <CalculatorButton onClick={this.handleInputClick} value={2} />
+                <CalculatorButton onClick={this.handleInputClick} value={3} />
               </div>
               <div className="row">
-                <CalculatorButton char="." />
-                <CalculatorButton char="0" />
-                <CalculatorButton char="=" />
-                
+                <CalculatorButton onClick={this.handleInputClick} value='.' />
+                <CalculatorButton onClick={this.handleInputClick} value={0} />
+                <CalculatorButton value="=" onClick={this.handleControlClick} />
               </div>
-              
             </div>
         </div>
       </div>

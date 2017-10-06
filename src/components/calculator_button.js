@@ -4,9 +4,9 @@ import Ink from 'react-ink';
 class CalculatorButton extends Component {
   render() {
     return (
-      <div className={`button ${this.props.className}`}>
+      <div className={`button ${this.props.className}`} onClick={() => this.props.onClick(this.props.value)}>
+        {this.props.value}
         <Ink />
-        {this.props.char}
       </div>
     );
   }
