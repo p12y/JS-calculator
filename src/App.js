@@ -7,7 +7,7 @@ import ClickNHold from 'react-click-n-hold';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {result: null, calculation: "", currentNum: "", prevButtonType: "", firstNum: null, secondNum: null, operator: ""};
+    this.state = {result: null, calculation: "", currentNum: "", operator: ""};
     this.handleInputClick = this.handleInputClick.bind(this);
     this.handleControlClick = this.handleControlClick.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
@@ -34,7 +34,7 @@ class App extends Component {
   handleControlClick(control) {
     switch(control) {
       case 'DEL': {
-        this.setState({calculation: this.state.calculation.slice(0, this.state.calculation.length - 1), result: null, operator: false});
+        this.setState({calculation: this.state.calculation.slice(0, this.state.calculation.length - 1), result: null});
         break;
       }
       case '+': {
@@ -64,7 +64,7 @@ class App extends Component {
   }
 
   clearScreen() {
-    this.setState({calculation: "", result: null, currentNum: ""});
+    this.setState({calculation: "", result: null, currentNum: "", operator: false});
   }
 
   render() {
