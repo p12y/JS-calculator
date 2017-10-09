@@ -16,14 +16,14 @@ class App extends Component {
   handleInputClick(number) {
     let stringNum = number.toString();
     let result = "";
-    let str = this.state.calculation + stringNum;
+    let str = this.state.calculation.concat(stringNum);
     str = str.replace(/x/g, '*').replace(/÷/g, '/');
     if (this.state.operator) {
-      result = eval(str);
+      result = parseFloat(eval(str).toFixed(6));
     }
     this.setState(
                   {
-                    calculation: this.state.calculation + number,
+                    calculation: this.state.calculation.concat(number),
                     currentNum: this.state.currentNum + stringNum,
                     result: result,
                     prevButtonType: 'number'
@@ -32,32 +32,41 @@ class App extends Component {
   }
 
   handleControlClick(control) {
+    let result = '';
+    let str = this.state.calculation.slice(0, this.state.calculation.length - 1);
+    let calculation = str.replace(/x/g, '*').replace(/÷/g, '/').replace(/[/+*-]$/, "");
+
     switch(control) {
       case 'DEL': {
-        this.setState({calculation: this.state.calculation.slice(0, this.state.calculation.length - 1), result: null});
+        result = eval(calculation)
+        this.setState({calculation: str, result: result});
         break;
       }
       case '+': {
-        this.setState({calculation: this.state.calculation.concat('+'), operator: true});
+        str = this.state.calculation.replace(/[+÷x-]$/, "");
+        this.setState({calculation: str.concat('+'), operator: true});
         break;
       }
       case '=': {
         let str = this.state.calculation;
         str = str.replace(/x/g, '*').replace(/÷/g, '/');
         let result = eval(str);
-        this.setState({calculation: parseFloat(result.toFixed(5)).toString(), result: "", operator: false });
+        this.setState({calculation: parseFloat(result.toFixed(6)).toString(), result: "", operator: false });
         break;
       }
       case '-': {
-        this.setState({calculation: this.state.calculation.concat('-'), operator: true});
+        str = this.state.calculation.replace(/[+÷x-]$/, "");
+        this.setState({calculation: str.concat('-'), operator: true});
         break;
       }
       case 'x': {
-        this.setState({calculation: this.state.calculation.concat('x'), operator: true});
+        str = this.state.calculation.replace(/[+÷x-]$/, "");
+        this.setState({calculation: str.concat('x'), operator: true});
         break;
       }
       case '÷': {
-        this.setState({calculation: this.state.calculation.concat('÷'), operator: true});
+        str = this.state.calculation.replace(/[+÷x-]$/, "");
+        this.setState({calculation: str.concat('÷'), operator: true});
         break;
       }
     }
