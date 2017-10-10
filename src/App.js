@@ -33,7 +33,7 @@ class App extends Component {
     let calculation;
     let currentNum = formatNumber(this.state.currentNum.concat(stringNum));
 
-    calculation = str.replace(/x/g, '*').replace(/÷/g, '/').replace(/,/g, "").replace(/[.]$/, "").replace(/[/+*-]$/, "");
+    calculation = str.replace(/×/g, '*').replace(/÷/g, '/').replace(/,/g, "").replace(/[.]$/, "").replace(/[/+*-]$/, "");
     
     if (this.state.operator) {
       result = parseFloat(eval(calculation).toFixed(6)).toLocaleString();
@@ -63,7 +63,7 @@ class App extends Component {
     switch(control) {
       case 'DEL': {
         str = this.state.calculation.slice(0, this.state.calculation.length - 1);
-        calculation = str.replace(/x/g, '*').replace(/÷/g, '/').replace(/[/+*-]$/, "").replace(/,/g, "");
+        calculation = str.replace(/×/g, '*').replace(/÷/g, '/').replace(/[/+*-]$/, "").replace(/,/g, "");
 
         if (calculation.length > 1) {
           str = str.replace(/,/g, '');
@@ -83,19 +83,19 @@ class App extends Component {
       }
       case '=': {
         str = this.state.calculation;
-        str = str.replace(/x/g, '*').replace(/÷/g, '/').replace(/,/g, "").replace(/[/+*-]$/, "").replace(/[.]$/, "");
+        str = str.replace(/×/g, '*').replace(/÷/g, '/').replace(/,/g, "").replace(/[/+*-]$/, "").replace(/[.]$/, "");
         result = parseFloat(eval(str).toFixed(6)).toLocaleString();
         this.setState({calculation: result, result: "", operator: false, currentNum: "", charCount: result.length });
         break;
       }
-      case '-': {
+      case '−': {
         str = this.state.calculation.replace(/[+÷x-]$/, "");
         this.setState({calculation: str.concat('-'), operator: true, currentNum: ""});
         break;
       }
-      case 'x': {
+      case '×': {
         str = this.state.calculation.replace(/[+÷x-]$/, "");
-        calculation = this.state.calculation.length > 0 ? str.concat('x') : '';
+        calculation = this.state.calculation.length > 0 ? str.concat('×') : '';
         this.setState({calculation: calculation, operator: true, currentNum: ""});
         break;
       }
@@ -137,18 +137,18 @@ class App extends Component {
                   onClick={this.handleControlClick}
                 />
                 <CalculatorButton 
-                  value="x" 
+                  value="&times;" 
                   className="calculator-control" 
                   onClick={this.handleControlClick}
                 />
                 <CalculatorButton 
-                  value="-" 
+                  value="&minus;" 
                   className="calculator-control" 
                   onClick={this.handleControlClick}
                 />
                 <CalculatorButton 
                   value="+" 
-                  className="calculator-control" 
+                  className="calculator-control bottom-right" 
                   onClick={this.handleControlClick}
                 />
               </div>
@@ -168,7 +168,7 @@ class App extends Component {
                 <CalculatorButton onClick={this.handleInputClick} value={3} />
               </div>
               <div className="row">
-                <CalculatorButton onClick={this.handleInputClick} value='.' />
+                <CalculatorButton onClick={this.handleInputClick} value='.' className="bottom-left" />
                 <CalculatorButton onClick={this.handleInputClick} value={0} />
                 <CalculatorButton value="=" onClick={this.handleControlClick} />
               </div>

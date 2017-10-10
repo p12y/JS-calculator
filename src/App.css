@@ -15,11 +15,11 @@ html, body, #root {
 .Calculator {
   width: 20em;
   height: auto;
-  background: #7C83BA;
+  background: black;
   -webkit-box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
   -moz-box-shadow: 7px 7px 21px -2px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 15px -2px rgba(0,0,0,0.75);
-  border-radius: 15px 15px 0 0;
+  border-radius: 15px 15px 15px 15px;
 }
 
 .row {
@@ -42,9 +42,9 @@ html, body, #root {
   background: #FFFFFF;
   height: 2.5em;
   opacity: 0.9;
-  -webkit-box-shadow: 5px -6px 208px 19px rgba(255,255,255,0.3);
-  -moz-box-shadow: 5px -6px 208px 19px rgba(255,255,255,0.3);
-  box-shadow: 5px -6px 208px 19px rgba(255,255,255,0.3);
+  -webkit-box-shadow: 5px -15px 200px 20px rgba(255, 255, 255, 0.63);
+  -moz-box-shadow: 5px -15px 200px 20px rgba(255, 255, 255, 0.651);
+  box-shadow: 5px -15px 200px 20px rgba(255, 255, 255, 0.63);
   color: #1D1D27;
   font-weight: 400;
   font-size: 2.5em;
@@ -94,4 +94,12 @@ html, body, #root {
   height: 4em;
   line-height: 4em;
   background: #3C3C46;
+}
+
+.button.bottom-right {
+  border-radius: 0 0 15px 0;
+}
+
+.button.bottom-left {
+  border-radius: 0 0 0 15px;
 }
