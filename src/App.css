@@ -1,6 +1,6 @@
 html, body, #root {
   height: 100%;
-  background: #2C2D3C;
+  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/dark_wood.png");
   color: #fff;
   font-weight: 300;
 }
@@ -73,7 +73,7 @@ html, body, #root {
   text-align: center;
   vertical-align: middle;
   line-height: 5em;
-  background: #1D1D27;
+  background: rgb(29, 29, 34);
   position: relative;
   cursor: pointer;
 }
