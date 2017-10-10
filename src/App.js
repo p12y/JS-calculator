@@ -19,7 +19,7 @@ function numberWithCommas(num) {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {result: null, calculation: "", currentNum: "", operator: ""};
+    this.state = {result: null, calculation: "", currentNum: "", operator: "", charCount: 0};
     this.handleInputClick = this.handleInputClick.bind(this);
     this.handleControlClick = this.handleControlClick.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
@@ -48,7 +48,8 @@ class App extends Component {
                     calculation: str,
                     currentNum: currentNum,
                     result: result,
-                    prevButtonType: 'number'
+                    prevButtonType: 'number',
+                    charCount: str.length
                   }
                   );
   }
@@ -71,7 +72,7 @@ class App extends Component {
         } else {
           result = calculation;
         }
-        this.setState({calculation: str, result: result, currentNum: str});
+        this.setState({calculation: str, result: result, currentNum: str, charCount: str.length});
         break;
       }
       case '+': {
@@ -83,7 +84,7 @@ class App extends Component {
         str = this.state.calculation;
         str = str.replace(/x/g, '*').replace(/÷/g, '/').replace(/,/g, "").replace(/[/+*-]$/, "").replace(/[.]$/, "");
         result = parseFloat(eval(str).toFixed(6)).toLocaleString();
-        this.setState({calculation: result, result: "", operator: false, currentNum: "" });
+        this.setState({calculation: result, result: "", operator: false, currentNum: "", charCount: result.length });
         break;
       }
       case '-': {
@@ -113,7 +114,7 @@ class App extends Component {
         <div className="App">
         <div className="Calculator">
             <div className="calculator-display">
-              <CalculatorDisplay result={this.state.result} calculation={this.state.calculation} />
+              <CalculatorDisplay result={this.state.result} calculation={this.state.calculation} charCount={this.state.charCount} />
             </div>
             <div className="calculator-inputs">
               <div className="column">
