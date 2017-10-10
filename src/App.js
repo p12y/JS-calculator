@@ -3,23 +3,19 @@ import './App.css';
 import CalculatorDisplay from './components/calculator_display';
 import CalculatorButton from './components/calculator_button';
 import ClickNHold from 'react-click-n-hold';
-
-function formatNumber(num) {
-  let operands = num.toString().split(/(\+|\x|\-|\÷)/);
-
-  let result = operands.map(operand => {
-    let parts = operand.split(".");
-    parts[0] = parts[0].replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-  });
-
-  return result.join('');
-}
+import { formatNumber, prepareForEval, toLocaleString, removeOperators } from './helpers';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {result: null, calculation: "", currentNum: "", operator: "", charCount: 0};
+    this.state = {
+                  result: null, 
+                  calculation: "", 
+                  currentNum: "", 
+                  operator: "", 
+                  charCount: 0
+                };
+                
     this.handleInputClick = this.handleInputClick.bind(this);
     this.handleControlClick = this.handleControlClick.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
@@ -29,18 +25,16 @@ class App extends Component {
     let stringNum = number.toString();
     let result = "";
     let str = this.state.calculation.concat(stringNum);
-    let numStreak = this.state.numStreak;
-    let calculation;
     let currentNum = formatNumber(this.state.currentNum.concat(stringNum));
-
-    calculation = str.replace(/×/g, '*').replace(/÷/g, '/').replace(/,/g, "").replace(/[.]$/, "").replace(/[/+*-]$/, "");
+    let calculation = prepareForEval(str);
     
     if (this.state.operator) {
-      result = parseFloat(eval(calculation).toFixed(6)).toLocaleString();
+      result = toLocaleString(calculation);
     }
     
     str = formatNumber(str);
-    str = str.slice(0, str.length - currentNum.length).concat(formatNumber(currentNum));
+    str = str.slice(0, str.length - currentNum.length)
+            .concat(formatNumber(currentNum));
 
 
     this.setState(
@@ -58,12 +52,11 @@ class App extends Component {
     let result = '';
     let str, calculation;
 
-    this.setState({numStreak: 0});
-
     switch(control) {
       case 'DEL': {
-        str = this.state.calculation.slice(0, this.state.calculation.length - 1);
-        calculation = str.replace(/×/g, '*').replace(/÷/g, '/').replace(/[/+*-]$/, "").replace(/,/g, "");
+        str = this.state.calculation
+          .slice(0, this.state.calculation.length - 1);
+        calculation = prepareForEval(str);
 
         if (calculation.length > 1) {
           str = str.replace(/,/g, '');
@@ -72,52 +65,93 @@ class App extends Component {
         } else {
           result = calculation;
         }
-        this.setState({calculation: str, result: result, currentNum: str, charCount: str.length});
+
+        this.setState({
+                        calculation: str, 
+                        result: result, 
+                        currentNum: str, 
+                        charCount: str.length
+                      });
         break;
       }
       case '+': {
-        str = this.state.calculation.replace(/[+÷x-]$/, "");
+        str = removeOperators(this.state.calculation);
         calculation = this.state.calculation.length > 0 ? str.concat('+') : '';
-        this.setState({calculation: calculation, operator: true, currentNum: ""});
+        this.setState({
+                        calculation: calculation, 
+                        operator: true, 
+                        currentNum: ""
+                      });
         break;
       }
       case '=': {
         str = this.state.calculation;
-        str = str.replace(/×/g, '*').replace(/÷/g, '/').replace(/,/g, "").replace(/[/+*-]$/, "").replace(/[.]$/, "");
-        result = parseFloat(eval(str).toFixed(6)).toLocaleString();
-        this.setState({calculation: result, result: "", operator: false, currentNum: "", charCount: result.length });
+        str = prepareForEval(str);
+        result = toLocaleString(str);
+        this.setState({
+                        calculation: result, 
+                        result: "", 
+                        operator: false, 
+                        currentNum: "", 
+                        charCount: result.length 
+                      });
         break;
       }
       case '−': {
-        str = this.state.calculation.replace(/[+÷x-]$/, "");
-        this.setState({calculation: str.concat('-'), operator: true, currentNum: ""});
+        str = removeOperators(this.state.calculation);
+        this.setState({
+                        calculation: str.concat('-'), 
+                        operator: true, 
+                        currentNum: ""
+                      });
         break;
       }
       case '×': {
-        str = this.state.calculation.replace(/[+÷x-]$/, "");
+        str = removeOperators(this.state.calculation);
         calculation = this.state.calculation.length > 0 ? str.concat('×') : '';
-        this.setState({calculation: calculation, operator: true, currentNum: ""});
+        this.setState({
+                        calculation: calculation, 
+                        operator: true, 
+                        currentNum: ""
+                      });
         break;
       }
       case '÷': {
-        str = this.state.calculation.replace(/[+÷x-]$/, "");
+        str = removeOperators(this.state.calculation);
         calculation = this.state.calculation.length > 0 ? str.concat('÷') : '';
-        this.setState({calculation: calculation, operator: true, currentNum: ""});
+        this.setState({
+                        calculation: calculation, 
+                        operator: true, 
+                        currentNum: ""
+                      });
+        break;
+      }
+      default: {
+        console.log('Unrecognised input');
         break;
       }
     }
   }
 
   clearScreen() {
-    this.setState({calculation: "", result: null, currentNum: "", operator: false});
+    this.setState({
+                    calculation: "", 
+                    result: null, 
+                    currentNum: "", 
+                    operator: false
+                  });
   }
 
   render() {
     return (
         <div className="App">
-        <div className="Calculator">
+          <div className="Calculator">
             <div className="calculator-display">
-              <CalculatorDisplay result={this.state.result} calculation={this.state.calculation} charCount={this.state.charCount} />
+              <CalculatorDisplay 
+                result={this.state.result} 
+                calculation={this.state.calculation} 
+                charCount={this.state.charCount} 
+              />
             </div>
             <div className="calculator-inputs">
               <div className="column">
@@ -168,7 +202,9 @@ class App extends Component {
                 <CalculatorButton onClick={this.handleInputClick} value={3} />
               </div>
               <div className="row">
-                <CalculatorButton onClick={this.handleInputClick} value='.' className="bottom-left" />
+                <CalculatorButton onClick={this.handleInputClick} value='.' 
+                  className="bottom-left" 
+                />
                 <CalculatorButton onClick={this.handleInputClick} value={0} />
                 <CalculatorButton value="=" onClick={this.handleControlClick} />
               </div>
