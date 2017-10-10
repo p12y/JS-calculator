@@ -4,8 +4,6 @@ import CalculatorDisplay from './components/calculator_display';
 import CalculatorButton from './components/calculator_button';
 import ClickNHold from 'react-click-n-hold';
 
-// FIXME: Get working with decimals
-
 function numberWithCommas(num) {
   let operands = num.toString().split(/(\+|\x|\-|\÷)/);
 
@@ -57,21 +55,23 @@ class App extends Component {
 
   handleControlClick(control) {
     let result = '';
-    let str = this.state.calculation.slice(0, this.state.calculation.length - 1);
-    let calculation = str.replace(/x/g, '*').replace(/÷/g, '/').replace(/[/+*-]$/, "").replace(/,/g, "");
+    let str, calculation;
 
     this.setState({numStreak: 0});
 
     switch(control) {
       case 'DEL': {
+        str = this.state.calculation.slice(0, this.state.calculation.length - 1);
+        calculation = str.replace(/x/g, '*').replace(/÷/g, '/').replace(/[/+*-]$/, "").replace(/,/g, "");
+
         if (calculation.length > 1) {
           str = str.replace(/,/g, '');
-          str = parseFloat(str).toLocaleString();
-          result = parseFloat(eval(calculation).toFixed(6)).toLocaleString();
+          str = numberWithCommas(str);
+          result = parseFloat(calculation);
         } else {
           result = calculation;
         }
-        this.setState({calculation: str, result: result});
+        this.setState({calculation: str, result: result, currentNum: str});
         break;
       }
       case '+': {
