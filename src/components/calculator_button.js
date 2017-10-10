@@ -6,7 +6,7 @@ class CalculatorButton extends Component {
     return (
       <div className={`button ${this.props.className}`} onClick={() => this.props.onClick(this.props.value)}>
         {this.props.value}
-        <Ink />
+        <Ink background={false} />
       </div>
     );
   }
