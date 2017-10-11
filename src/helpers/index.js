@@ -21,7 +21,7 @@ export function prepareForEval(string) {
 }
 
 export function toLocaleString(calculation) {
-  if (calculation[0].match(/\d/) || calculation[0] === '-') {
+  if (calculation[0].match(/\d|-/) && calculation[0] !== '0') {
     return parseFloat(eval(calculation).toFixed(6)).toLocaleString();
   }
   return "";
@@ -29,4 +29,8 @@ export function toLocaleString(calculation) {
 
 export function removeOperators(calculation) {
   return calculation.replace(/[+÷×-]$/, "");
+}
+
+export function addOperator(calculation, string, operator) {
+  return calculation.length > 0 ? string.concat(operator) : '';
 }

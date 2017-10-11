@@ -3,7 +3,7 @@ import './App.css';
 import CalculatorDisplay from './components/calculator_display';
 import CalculatorButton from './components/calculator_button';
 import ClickNHold from 'react-click-n-hold';
-import { formatNumber, prepareForEval, toLocaleString, removeOperators } from './helpers';
+import { formatNumber, prepareForEval, toLocaleString, removeOperators, addOperator } from './helpers';
 
 class App extends Component {
   constructor(props) {
@@ -36,7 +36,6 @@ class App extends Component {
     str = str.slice(0, str.length - currentNum.length)
             .concat(formatNumber(currentNum));
 
-
     this.setState(
                   {
                     calculation: str,
@@ -50,7 +49,8 @@ class App extends Component {
 
   handleControlClick(control) {
     let result = '';
-    let str, calculation;
+    let calculation;
+    let str = removeOperators(this.state.calculation);
 
     switch(control) {
       case 'DEL': {
@@ -58,12 +58,11 @@ class App extends Component {
           .slice(0, this.state.calculation.length - 1);
         calculation = prepareForEval(str);
 
+        result = calculation;
+
         if (calculation.length > 1) {
-          str = str.replace(/,/g, '');
           str = formatNumber(str);
           result = parseFloat(calculation);
-        } else {
-          result = calculation;
         }
 
         this.setState({
@@ -75,10 +74,9 @@ class App extends Component {
         break;
       }
       case '+': {
-        str = removeOperators(this.state.calculation);
-        calculation = this.state.calculation.length > 0 ? str.concat('+') : '';
+        calculation = addOperator(this.state.calculation, str, '+');
         this.setState({
-                        calculation: calculation, 
+                        calculation, 
                         operator: true, 
                         currentNum: ""
                       });
@@ -87,9 +85,9 @@ class App extends Component {
       case '=': {
         str = this.state.calculation;
         str = prepareForEval(str);
-        result = toLocaleString(str);
+        calculation = toLocaleString(str);
         this.setState({
-                        calculation: result, 
+                        calculation, 
                         result: "", 
                         operator: false, 
                         currentNum: "", 
@@ -98,7 +96,6 @@ class App extends Component {
         break;
       }
       case '−': {
-        str = removeOperators(this.state.calculation);
         this.setState({
                         calculation: str.concat('-'), 
                         operator: true, 
@@ -107,20 +104,18 @@ class App extends Component {
         break;
       }
       case '×': {
-        str = removeOperators(this.state.calculation);
-        calculation = this.state.calculation.length > 0 ? str.concat('×') : '';
+        calculation = addOperator(this.state.calculation, str, '×');
         this.setState({
-                        calculation: calculation, 
+                        calculation, 
                         operator: true, 
                         currentNum: ""
                       });
         break;
       }
       case '÷': {
-        str = removeOperators(this.state.calculation);
-        calculation = this.state.calculation.length > 0 ? str.concat('÷') : '';
+        calculation = addOperator(this.state.calculation, str, '÷');
         this.setState({
-                        calculation: calculation, 
+                        calculation, 
                         operator: true, 
                         currentNum: ""
                       });
